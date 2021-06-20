@@ -3394,7 +3394,7 @@ metadata:
     app.kubernetes.io/version: "7.2.1"
     app.kubernetes.io/managed-by: Helm
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - name: service
       port: 3000
@@ -4480,7 +4480,7 @@ metadata:
   labels:
     app: jaeger
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - name: http-query
       port: 80
@@ -4863,7 +4863,7 @@ spec:
   - name: http-metrics
     protocol: TCP
     port: 9090
-  type: NodePort
+  type: LoadBalancer
   selector:
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali-server
