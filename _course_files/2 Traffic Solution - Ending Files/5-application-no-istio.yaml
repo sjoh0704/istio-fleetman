@@ -70,6 +70,30 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: webapp-experimental
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  replicas: 1
+  template: # template for the pods
+    metadata:
+      labels:
+        app: webapp
+        version: experimental
+    spec:
+      containers:
+      - name: webapp
+        image: richardchesterwood/istio-fleetman-webapp-angular:6-experimental
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: production-microservice
+        imagePullPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: webapp
 spec:
   selector:
@@ -80,6 +104,7 @@ spec:
     metadata:
       labels:
         app: webapp
+        version: original
     spec:
       containers:
       - name: webapp
@@ -119,7 +144,7 @@ spec:
   selector:
     matchLabels:
       app: staff-service
-  replicas: 1
+  replicas: 0
   template: # template for the pods
     metadata:
       labels:
@@ -167,7 +192,7 @@ metadata:
   name: fleetman-webapp
 spec:
   # This defines which pods are going to be represented by this Service
-  # The service becomes a network endpoint for either other services
+  # The service becomes a network endpoint for either other serSvices
   # or maybe external users to connect to (eg browser)
   selector:
     app: webapp
